@@ -253,6 +253,11 @@ func getRDSClusters() ([]RDSInfo, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to describe DB clusters: %w", err)
 		}
+
+        if len(RDSClusters.DBClusters) == 0 {
+           more = false
+        }
+		
 		for _, RDSCluster := range RDSClusters.DBClusters {
 			RDSInfo := RDSInfo{
 				ClusterIdentifier: *RDSCluster.DBClusterIdentifier,
@@ -329,6 +334,11 @@ func getRDSInstances() ([]RDSInfo, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to describe DB instances: %w", err)
 		}
+
+        if len(RDSInstances.DBInstances) == 0 {
+           more = false
+        }
+
 		for _, RDSInstance := range RDSInstances.DBInstances {
 			RDSInfo := RDSInfo{
 				ClusterIdentifier: *RDSInstance.DBInstanceIdentifier,
